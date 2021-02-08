@@ -17,7 +17,8 @@ jobs:
           splited = body.split('\n')
           start = splited.index("```yml")+1
           end = splited.index("```")
-          print(' '.join([i[2:] for i in splited[start:end]]), file=sys.stdout)
-          
+          datasets=' '.join([i[2:] for i in splited[start:end]])
+          sys.stdout.write(datasets)  
+                  
       - name: test output
         run: echo "${{ steps.parsing.outputs.stdout }}"
