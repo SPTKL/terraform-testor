@@ -11,14 +11,14 @@ jobs:
         shell: python
         id: parsing
         run: |
-          import sys
+          import os
           
           body = """${{ github.event.issue.body }}"""
           splited = body.split('\n')
           start = splited.index("```yml")+1
           end = splited.index("```")
           datasets=' '.join([i[2:] for i in splited[start:end]])
-          sys.stdout.write(datasets)  
+          os.system(f'echo "::set-output name=datasets::{datasets}"')
                   
       - name: test output
-        run: echo "${{ steps.parsing.outputs.stdout }}"
+        run: echo "${{ steps.parsing.outputs.datasets }}"
