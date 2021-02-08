@@ -1,6 +1,8 @@
-name: CI
+name: Staging -> Production
+on:
+  issue_comment:
+    types: [created, edited]
 
-on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -8,4 +10,5 @@ jobs:
       - name: Run a one-line script
         shell: python
         run: |
-          print("${{ github.actor }}")
+          print("""${{ github.event.issue.title }}""")
+          print("""${{ github.event.issue.body }}""")
