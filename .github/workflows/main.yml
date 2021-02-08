@@ -9,11 +9,13 @@ jobs:
     steps:
       - name: Run a one-line script
         shell: python
+        id: parsing
         run: |
-          import re
+          body = """${{ github.event.issue.body }}"""
+          splited = body.split('\n')
+          start = splited.index("```yml")+1
+          end = splited.index("```")
+          print(' '.join([i[2:] for i in splited[start:end]]))
           
-          title="""${{ github.event.issue.title }}"""
-          body="""${{ github.event.issue.body }}"""
-          
-          result = re.search('%s(.*)%s' % ('---', '---'), body).group(1)
-          print(result)
+      - name: test output
+        run: echo "${{ steps.parsing.outputs.stdout }}"
