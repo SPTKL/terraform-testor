@@ -10,5 +10,10 @@ jobs:
       - name: Run a one-line script
         shell: python
         run: |
-          print("""${{ github.event.issue.title }}""")
-          print("""${{ github.event.issue.body }}""")
+          import re
+          
+          title="""${{ github.event.issue.title }}"""
+          body="""${{ github.event.issue.body }}"""
+          
+          result = re.search('%s(.*)%s' % ('---', '---'), body).group(1)
+          print(result)
